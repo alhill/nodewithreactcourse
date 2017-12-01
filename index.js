@@ -16,9 +16,9 @@ app.use(
 		keys: [keys.cookieKey]
 	})
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 require('./routes/authRoutes')(app); //First set of parenthesis call the function, second set of parenthesis are the arguments of the function
 
