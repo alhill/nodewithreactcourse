@@ -5,9 +5,9 @@ import * as actions from '../actions'; //Import everything from actions folder a
 
 import Header from './Header';
 import Landing from './Landing';
-
-const Dashboard = () => <h2>Dashboard</h2>;
-const SurveyNew = () => <h2>SurveyNew</h2>;
+import Dashboard from './Dashboard';
+import SurveyNew from './surveys/SurveyNew';
+import SurveyAnswer from './surveys/SurveyAnswer';
 
 
 class App extends Component {
@@ -19,11 +19,15 @@ class App extends Component {
 		return (
 			<div>
 				<BrowserRouter>
-					<div className="container">
+					<div>
 						<Header />
-						<Route exact path="/" component={Landing} />
-						<Route exact path="/surveys" component={Dashboard} />
-						<Route path="/surveys/new" component={SurveyNew} />
+						<div className="container">
+							<Route exact path="/" component={Landing} />
+							<Route exact path="/surveys" component={Dashboard} />
+							<Route path="/surveys/new" component={SurveyNew} />
+
+							<Route path="/surveys/answer" component={SurveyAnswer} />
+						</div>
 					</div>
 				</BrowserRouter>
 			</div>

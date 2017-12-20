@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
-require('./models/user');
+const bodyParser = require('body-parser')
+require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI);
@@ -17,10 +19,15 @@ app.use(
 	})
 );
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./routes/authRoutes')(app); //First set of parenthesis call the function, second set of parenthesis are the arguments of the function
 
 const PORT = process.env.PORT || 5000;
 app.listen( PORT );
+
+require('./routes/authRoutes')(app); //First set of parenthesis call the function, second set of parenthesis are the arguments of the function
+require('./routes/surveyRoutes')(app);
+

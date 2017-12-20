@@ -9,11 +9,14 @@ class Header extends Component {
 				return;
 			case false:
 				return (
-					<li><a href="/auth/google">Login With Google</a></li>
+					<li><a className="waves-effect waves-light btn" href="/auth/google">Login With Google</a></li>
 				);
 			default:
 				return (
-					<li><a href="/api/logout">Logout</a></li>
+					<div>
+						<li><Link className="waves-effect waves-light btn" to={ '/surveys' }>List</Link></li>
+						<li><a className="waves-effect waves-light btn" href="/api/logout">Logout</a></li>
+					</div>
 				);
 		}
 	}
@@ -21,12 +24,7 @@ class Header extends Component {
 		return (
  			<nav>
 				<div className="nav-wrapper">
-					<Link 
-						className="left brand-logo" 
-						to={ this.props.auth ? '/surveys' : '/'}
-					>
-						Formulario
-					</Link>
+					<Link style={{paddingLeft: '1rem'}} className="left brand-logo" to={ '/' }>Formulario</Link>
 					<ul className="right">
 						{ this.renderContent() }
 					</ul>

@@ -10,7 +10,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser( (id, done) => {
-	console.log( id );
+	//console.log( id );
 	User.findById(id).then(user => {
 		done(null, user);
 	});
@@ -30,10 +30,13 @@ passport.use(
 				return done(null, existingUser); //first argument informs of an error
 				//else not necessary, if the user exists the function ends with the return
 			} 
-			const user = await new User({ googleId: profile.id }).save()
+			const user = await new User({ 
+				googleId: profile.id,
+				name: profile.displayName,
+				email: profile.emails[0].value
+			}).save()
 			done(null, user);
+			
 		}
 	)	
 );
-
-/* COMENTARIO INÚTIL PARA QUE HAGA ALGO QUE HACER COMMIT */
