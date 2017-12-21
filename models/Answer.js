@@ -7,5 +7,5 @@ const answerSchema = new Schema({
 	rating: Number,
 	_user: { type: Schema.Types.ObjectId, ref: 'User' }
 });
-
+//
 module.exports = answerSchema;
