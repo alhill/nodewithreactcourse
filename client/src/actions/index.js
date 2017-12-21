@@ -11,8 +11,18 @@ export const fetchSurveys = () => async (dispatch) => {
 	dispatch({ type: FETCH_SURVEYS, payload: res.data });
 }
 
+export const fetchAll = () => async (dispatch) => {
+	const userData = await axios.get('/api/current_user');
+	const surveysData = await axios.get('/api/list_surveys');
+	dispatch({ type: FETCH_SURVEYS, payload: { 
+			user: userData.data, 
+			surveys: surveysData.data
+		}
+	});
+}
+
 export const submitSurvey = values => async (dispatch) => {
-	await axios.post('/api/surveys', values);
+	await axios.post('/api/save_survey', values);
 };
 
 

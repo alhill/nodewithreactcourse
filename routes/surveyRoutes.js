@@ -4,7 +4,7 @@ const requireAdmin = require('../middlewares/requireAdmin');
 const Survey = mongoose.model('surveys');
 
 module.exports = app => {
-	app.post('/api/surveys', requireLogin, requireAdmin, (req, res) => {
+	app.post('/api/save_survey', requireLogin, requireAdmin, (req, res) => {
 		//console.log( "llegue aqui" );
 		const question_keyval = Object.entries(req.body);
 		const questions_arr = [];
