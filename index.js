@@ -27,6 +27,18 @@ app.use(passport.session());
 require('./routes/authRoutes')(app); //First set of parenthesis call the function, second set of parenthesis are the arguments of the function
 require('./routes/surveyRoutes')(app);
 
+if (process.env.NODE_ENV === 'production') {
+	// Express will serve up production assets like main.js
+	app.use(express.statis('client/build'));
+	
+	// If not, Express will serve up index.html if it doesn't recognise the route
+	const path = require('path');
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+	});
+	
+}
+
 const PORT = process.env.PORT || 5000;
 app.listen( PORT );
 
