@@ -23,16 +23,27 @@ class Dashboard extends Component {
   }
 	
 	componentDidMount(){
-		this.props.fetchAll();
+
+		const fetchedData = sessionStorage.getItem('fetchedData');
+
+		if( !fetchedData || fetchedData === 'null' ){ this.props.fetchAll(); } //Llamar al back solo una vez por sesión
+		else{
+			this.props.fetchAll();
+			//console.log( JSON.parse(sessionStorage.getItem('fetchedData')) );
+			this.setState({
+				surveys: JSON.parse(sessionStorage.getItem('fetchedData')).surveys,
+				user: JSON.parse(sessionStorage.getItem('fetchedData')).user
+			})
+		}
 	}
 	
 	componentWillReceiveProps(nextProps){	
-		localStorage.setItem('fetchedData', JSON.stringify(nextProps.fetchedData));
+		//console.log( nextProps );
+		sessionStorage.setItem('fetchedData', JSON.stringify(nextProps.fetchedData));
 		this.setState({
 			surveys: nextProps.fetchedData.surveys,
 			user: nextProps.fetchedData.user
 		})
-		console.log( localStorage );
 	}
 	
 	renderContent(){

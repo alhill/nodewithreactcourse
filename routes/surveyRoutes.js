@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin'); 
 const requireAdmin = require('../middlewares/requireAdmin'); 
 const Survey = mongoose.model('surveys');
+const Answer = mongoose.model('answers');
 
 module.exports = app => {
 	app.post('/api/save_survey', requireLogin, requireAdmin, (req, res) => {
@@ -25,6 +26,36 @@ module.exports = app => {
 		}).save();
 	});
 	
+	app.post('/api/save_answer', requireLogin, (req, res) => {
+		
+		const { answer, user, survey } = req.body;
+
+		const answers_arr = Object.entries(answer).map((elem, i) => {
+			return elem[1];
+		});
+
+		const sum = answers_arr.reduce( (a,b) => {
+			return (parseInt(a)+parseInt(b))
+		});
+		const rating = sum / (answers_arr.length);
+
+		const newAnswer = new Answer({
+			date: Date.now(),
+			answer: answers_arr,
+			_user: user,
+			rating
+		})
+		
+		Survey.findOne(
+			{_id:survey}, 
+			function(err,doc){	
+				//console.log( newAnswer );
+				doc.answers.push( newAnswer );   
+				doc.save();
+			}
+		)
+	});
+			
 	app.get('/api/list_surveys', requireLogin, (req, res) => {
 		Survey.find({}, (err, surveys) => {
 			res.send( surveys );

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import SurveyField from './SurveyField';
 import * as actions from '../../actions';
 
@@ -46,7 +47,11 @@ class SurveyForm extends Component{
 		return (
 			<div>
 			<br />
-				<form onSubmit={ this.props.handleSubmit( values => this.props.submitSurvey( values ) ) }>
+				<form onSubmit={ this.props.handleSubmit( (values) => {
+						this.props.submitSurvey( values );
+						this.props.history.push("/surveys");
+					})
+				}>
 					{this.renderFields()}
 					<button className="waves-effect waves-light btn blue" type="button" onClick={ this.handleAddQuestion }>Add field</button>
 					<span>&nbsp;&nbsp;&nbsp;</span>
@@ -61,5 +66,5 @@ SurveyForm = reduxForm({
 	form: 'surveyForm'
 })(SurveyForm);
 
-export default connect(null, actions)(SurveyForm);
+export default connect(null, actions)(withRouter(SurveyForm));
 

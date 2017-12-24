@@ -21,8 +21,17 @@ export const fetchAll = () => async (dispatch) => {
 	});
 }
 
-export const submitSurvey = values => async (dispatch) => {
+export const submitSurvey = (values) => async () => {
 	await axios.post('/api/save_survey', values);
 };
 
-
+export const submitAnswer = async (answer, user, survey, history) => {
+	await axios.post('/api/save_answer', 
+	{
+		answer,
+		user,
+		survey
+	},
+		history.push('/thanks')
+	);
+}
