@@ -61,6 +61,18 @@ module.exports = app => {
 			res.send( surveys );
 		});
 	});
+	
+	app.get('/api/survey_info', requireLogin, requireAdmin, (req, res) => {
+		Survey.findOne({ _id: req.query.surveyId })
+					.populate({
+    				path: 'answers._user',
+						model: 'users'
+  				})
+					.exec((err, survey) => {
+						res.send( survey );
+					});
+	});
+
 }
 		
 

@@ -9,6 +9,7 @@ import Dashboard from './Dashboard';
 import SurveyNew from './surveys/SurveyNew';
 import SurveyAnswer from './surveys/SurveyAnswer';
 import SurveyThanks from './surveys/SurveyThanks';
+import SurveyPanel from './surveys/SurveyPanel';
 
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
 							<Route path="/surveys/new" component={SurveyNew} />
 							<Route path="/surveys/answer" component={SurveyAnswer} />
 							<Route path="/thanks" component={SurveyThanks} />
+							<Route path="/surveys/panel" component={SurveyPanel} />
 						</div>
 					</div>
 				</BrowserRouter>
