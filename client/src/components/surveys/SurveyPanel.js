@@ -36,11 +36,18 @@ class SurveyPanel extends Component{
 	
 	componentWillReceiveProps(props){
 		this.setState({ actualSurvey: props.actual });
-		const sum = props.actual.answers.reduce( (a, b) => {
-			return { rating: parseFloat(a.rating) + parseFloat(b.rating) }
-		});
-		const avg = sum.rating / (props.actual.answers.length);
-		this.setState({ avg })
+		if( props.actual.answers.length !== 0 ){
+			const sum = props.actual.answers.reduce( (a, b) => {
+				return { rating: parseFloat(a.rating) + parseFloat(b.rating) }
+			});
+			const avg = sum.rating / (props.actual.answers.length);
+			this.setState({ avg })
+		}
+		else{ 
+			const avg = "Sin datos" 
+			this.setState({ avg })
+		}
+		
 	}
 	
 	render(){
