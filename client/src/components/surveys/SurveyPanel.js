@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import ReactTable from 'react-table';
-import 'react-table/react-table.css'
+import ReactModal from 'react-modal';
+import 'react-table/react-table.css';
+
+import DensityChart from '../charts/DensityChart';
 
 export const mapStoreToProps = state => {
 	const actual = state.actual;
@@ -20,9 +23,21 @@ class SurveyPanel extends Component{
 				questions: [],
 				answers: [],
 			},
-			avg: ""
+			avg: "",
+			showModal: false
 		}
+		
+		this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
 	}
+	
+	handleOpenModal () {
+    this.setState({ showModal: true });
+  }
+  
+  handleCloseModal () {
+    this.setState({ showModal: false });
+  }
 	
 	componentDidMount(){
 		if (this.props.location.surveyId) { 
@@ -87,6 +102,16 @@ class SurveyPanel extends Component{
           ]}
           defaultPageSize={10}
           className="-striped -highlight"/>
+          <button onClick={this.handleOpenModal}>Trigger Modal</button>
+        <ReactModal 
+           isOpen={this.state.showModal}
+           contentLabel="Minimal Modal Example"
+           shouldCloseOnOverlayClick={true}
+           style={{ overlay: { zIndex: 2 } }}
+        >
+          <button onClick={this.handleCloseModal}>Close Modal</button>
+        </ReactModal>
+        <DensityChart actualSurvey={this.state.actualSurvey.answers} />
 			</div>
 		);
 	}
