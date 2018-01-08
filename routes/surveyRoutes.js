@@ -6,11 +6,10 @@ const Answer = mongoose.model('answers');
 
 module.exports = app => {
 	app.post('/api/save_survey', requireLogin, requireAdmin, (req, res) => {
-		//console.log( "llegue aqui" );
 		const question_keyval = Object.entries(req.body);
 		const questions_arr = [];
 		question_keyval.map( (elem, i) => {
-			if( i>1 ){
+			if( i>=1 ){
 				questions_arr.push( elem[1] );
 			}
 		});	
