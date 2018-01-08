@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
+import RadarGlobal from './charts/RadarGlobal';
+
 export const mapStoreToProps = state => {
 	const fetchedData = state.surveys;
 	return { 
@@ -46,8 +48,16 @@ class Dashboard extends Component {
 		})
 	}
 	
-	renderContent(){
-
+	globalGraphs(){
+		console.log( this.state.surveys );
+		if( this.state.user != null && this.state.user.isAdmin ){
+			return(
+				<RadarGlobal surveys={this.state.surveys} />
+			)
+		}
+	}
+	
+	listSurveys(){
 		switch ( this.state.surveys ){
 			case null:
 				return;
@@ -80,12 +90,14 @@ class Dashboard extends Component {
 			}	
 	}
 	
-	adminContent(){
+	addSurveyButton(){
 		if( this.state.user != null && this.state.user.isAdmin ){
 			return (
-				<Link className="btn-floating btn-large red" to="/surveys/new">
-					<i className="material-icons">add</i>
-				</Link>
+				<div className="fixed-action-btn">
+					<Link className="btn-floating btn-large red" to="/surveys/new">
+						<i className="material-icons">add</i>
+					</Link>
+				</div>
 			)
 		}
 	}
@@ -94,10 +106,9 @@ class Dashboard extends Component {
 		return (
 			<div>
 				<h2>Dashboard</h2>
-				{ this.renderContent() }
-				<div className="fixed-action-btn">
-					{ this.adminContent() }
-				</div>
+				{ this.globalGraphs() }
+				{ this.listSurveys() }
+				{ this.addSurveyButton() }
 			</div>
 		)
 	}
